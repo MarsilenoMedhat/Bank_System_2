@@ -10,6 +10,7 @@
 #include "clsUpdateClientScreen.h"
 #include "clsFindClientScreen.h"
 #include "clsTransactionsScreen.h"
+#include "clsManagerUsers.h"
 using namespace std;
 
 class clsMainScreen : protected clsScreen {
@@ -59,7 +60,8 @@ private:
     }
 
     static void _ShowManageUsersScreen() {
-        cout << "\nManage users screen will be here soon...\n";
+        // cout << "\nManage users screen will be here soon...\n";
+        clsManagerUsers::ShowManageUsersMenuScreen();
     }
 
     static void _ShowEndScreen() {
