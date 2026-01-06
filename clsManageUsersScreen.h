@@ -6,6 +6,7 @@
 #include "clsString.h"
 #include "clsScreen.h"
 #include "clsUsersListScreen.h"
+#include "clsAddNewUserScreen.h"
 using namespace std;
 
 class clsManageUsersScreen : protected clsScreen {
@@ -24,7 +25,8 @@ private:
     }
 
     static void _ShowAddNewUserScreen() {
-        cout << "\nAdd new user screen will be here soon...\n";
+        clsAddNewUserScreen::ShowAddUserScreen();
+        // cout << "\nAdd new user screen will be here soon...\n";
     }
 
     static void _ShowDeleteUserScreen() {
