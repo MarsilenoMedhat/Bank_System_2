@@ -86,7 +86,7 @@ private:
 public:
 
     static void ShowAddUserScreen() {
-        clsScreen::_PrineScreenHeader("Add nre user screen");
+        clsScreen::_PrineScreenHeader("Add new user screen");
         string Username = "";
 
         while (true) {
