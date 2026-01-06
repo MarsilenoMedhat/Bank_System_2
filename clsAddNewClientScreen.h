@@ -43,7 +43,7 @@ public:
         while (true) {
             AccountNumber = clsInputValidate::ReadString("Enter the new account number or enter \"back\" to back to the main menu: ");
 
-            if (clsUtil::IsEqualText(AccountNumber)) {
+            if (clsUtil::IsEqualText(AccountNumber, "back")) {
                 cout << "\nOperation has been cancelled.\n";
                 return;
             }
@@ -57,7 +57,7 @@ public:
         clsBankClient::enSaveResults SaveResult = clsBankClient::enSaveResults::vsFailedOperationCancelled;
 
         char ConfirmAdding = clsInputValidate::ReadChar("\nAre you sure you want to add this client y/n? ");
-        if (ConfirmAdding == 'Y') {
+        if (toupper(ConfirmAdding) == 'Y') {
             SaveResult = NewClient.Save();
         }
 
