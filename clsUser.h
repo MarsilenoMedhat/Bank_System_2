@@ -98,6 +98,8 @@ private:
 
 public:
 
+    enum enPermissions {eFullAccess = -1, eShowClientsList = 1, eAddNewClient = 2, eDeleteClient = 4, eUpdateClient = 8, eFindClient = 16, eTransactions = 32, eManageUsers = 64};
+
     clsUser(string FirstName, string LastName, string Email, string Phone, string Username, string Password, int Permission, enMode Mode = enMode::eUpdateMode) : clsPerson (FirstName, LastName, Email, Phone) {
         _Username = Username;
         _Password = Password;
@@ -198,7 +200,12 @@ public:
         return _LoadUsersDataFromFile();
     }
 
-    enum enSaveResults { svFaildEmptyObject = 0, svSucceeded = 1, svFaildUserExists = 2 };
+    static clsUser GetAddNewUserObject(string UserName)
+    {
+        return clsUser("", "", "", "", UserName, "", 0, enMode::eAddMode);
+    }
+
+    enum enSaveResults {svFaildEmptyObject = 0, svSucceeded = 1, svFaildUserExists = 2, svFailed = 3};
 
     enSaveResults Save() {
         switch(_Mode) {
@@ -216,6 +223,8 @@ public:
                 _AddNew();
                 _Mode == enMode::eUpdateMode;
                 return enSaveResults::svSucceeded;
+            default:
+                return enSaveResults::svFailed;
         }
     }
 };
