@@ -3,6 +3,7 @@
 #include <iostream>
 #include "clsUser.h"
 #include "Global.h"
+#include "clsDate.h"
 using namespace std;
 
 class clsScreen {
@@ -15,13 +16,14 @@ protected:
             cout << "\n\t\t" << SubTitle;
         }
         cout << "\n_______________________________________________________\n\n";
-    }
+        cout << "User: " << CurrentUser.GetUsername() << endl;
+        cout << "Date: " << clsDate::DateToString(clsDate::getSystemTime());
+        cout << "\n_______________________________________________________\n\n";
+    }   
 
     static bool _CheckAccessRight(clsUser::enPermissions Permission) {
         if (!CurrentUser.CheckAccessPermission(Permission)) {
-        cout << "_______________________________________________________\n";
-        cout << "\nAccess denied! Please contact you adminstrator.\n";
-        cout << "_______________________________________________________\n";
+            _PrineScreenHeader("Access denied!", "Please contact you adminstrator.");
             return false;
         }
         return true;
