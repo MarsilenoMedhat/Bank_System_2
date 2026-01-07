@@ -29,6 +29,11 @@ private:
 public:
 
     static void DeleteClient() {
+
+        if (!clsScreen::_CheckAccessRight(clsUser::enPermissions::eDeleteClient)) {
+            return;
+        }
+
         clsScreen::_PrineScreenHeader("Delete client");
         string AccountNumber = "";
 

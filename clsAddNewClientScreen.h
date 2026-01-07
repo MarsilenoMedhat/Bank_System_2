@@ -37,6 +37,10 @@ private:
 public:
 
     static void AddNewClient() {
+        if (!clsScreen::_CheckAccessRight(clsUser::enPermissions::eAddNewClient)) {
+            return;
+        }
+
         clsScreen::_PrineScreenHeader("Add new client");
         string AccountNumber = "";
 

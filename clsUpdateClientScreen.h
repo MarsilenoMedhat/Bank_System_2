@@ -36,7 +36,12 @@ private:
     
 public:
 
-static void UpdateClient() {
+    static void UpdateClient() {
+
+        if (!clsScreen::_CheckAccessRight(clsUser::enPermissions::eUpdateClient)) {
+            return;
+        }
+
         clsScreen::_PrineScreenHeader("Update client data");
         string AccountNumber = "";
 

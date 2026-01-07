@@ -29,6 +29,11 @@ private:
 public:
 
     static void FindClient() {
+
+        if (!clsScreen::_CheckAccessRight(clsUser::enPermissions::eFindClient)) {
+            return;
+        }
+
         clsScreen::_PrineScreenHeader("Find client");
         string AccountNumber = clsInputValidate::ReadString("Enter the account number or enter \"back\" to back to the main menu: ");
 
