@@ -65,6 +65,11 @@ public:
 
     static void ShowTransactionMenuScreen() {
         system("cls");
+
+        if (!clsScreen::_CheckAccessRight(clsUser::enPermissions::eTransactions)) {
+            return;
+        }
+
         clsScreen::_PrineScreenHeader("Transactions menu");
         cout << "\n========================================\n";
         cout << "\n\tTransactions Menu\n";

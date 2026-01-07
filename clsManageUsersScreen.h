@@ -88,6 +88,11 @@ private:
 public:
     static void ShowManageUsersMenuScreen() {
         system("cls");
+
+        if (!clsScreen::_CheckAccessRight(clsUser::enPermissions::eManageUsers)) {
+            return;
+        }
+
         clsScreen::_PrineScreenHeader("Manage users screen");
         cout << "\n========================================\n";
         cout << "\n\t\tMain Menu\n";
@@ -97,7 +102,7 @@ public:
         cout << " [3] Delete user.\n";
         cout << " [4] Update user.\n";
         cout << " [5] Find user.\n";
-        cout << " [6] Main menu screen.\n";
+        cout << " [6] Main menu.\n";
         cout << "========================================\n";
         _PerformManageUserMenuOption((clsManageUsersScreen::enManageUsersMenuOptions)_ReadManageUserMenuOption());
     }
