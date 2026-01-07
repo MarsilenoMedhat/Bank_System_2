@@ -205,6 +205,16 @@ public:
         return clsUser("", "", "", "", UserName, "", 0, enMode::eAddMode);
     }
 
+    bool CheckAccessPermission(enPermissions Permission) {
+        if (this->_Permission == enPermissions::eFullAccess) {
+            return true;
+        }
+        if ((Permission & this->_Permission) == Permission) {
+            return true;
+        }
+        return false;
+    }
+
     enum enSaveResults {svFaildEmptyObject = 0, svSucceeded = 1, svFaildUserExists = 2, svFailed = 3};
 
     enSaveResults Save() {
