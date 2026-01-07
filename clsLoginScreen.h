@@ -14,15 +14,22 @@ class clsLoginScreen : protected clsScreen {
 
 private:
 
-    static void _Login() {
+    static bool _Login() {
         string Username = "", Password = "";
         bool LoginFailed = false;
+        short FaildLoginCount = 0;
 
         do {
             if (LoginFailed) {
-                cout << "\nInvlaid Username/Password!\n\n";
+                FaildLoginCount++;
+                cout << "\nInvlaid Username/Password!\n";
+                cout << "You have " << 3 - FaildLoginCount << " chances to login.\n\n";
             }
 
+            if (FaildLoginCount == 3) {
+                cout << "The system locked after 3 login attempts.\n";
+                return false;
+            }
             Username = clsInputValidate::ReadString("\nEnter the username: ");
             Password = clsInputValidate::ReadString("\nEnter the password: ");
 
@@ -31,13 +38,14 @@ private:
 
         } while(LoginFailed);
         clsMainScreen::ShowMainMenuScreen();
+        return true;
     }
 public:
 
-    static void ShowLoginScreen() {
+    static bool ShowLoginScreen() {
         system("cls");
         clsScreen::_PrineScreenHeader("Login screen");
-        _Login();
+        return _Login();
     }
 
 };
