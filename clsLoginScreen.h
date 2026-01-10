@@ -7,7 +7,7 @@
 #include "clsInputValidate.h"
 #include "clsUser.h"
 #include "clsBankClient.h"
-#include "Global.h"
+#include "clsDate.h"
 using namespace std;
 
 class clsLoginScreen : protected clsScreen {
@@ -37,6 +37,7 @@ private:
             LoginFailed = CurrentUser.IsEmpty();
 
         } while(LoginFailed);
+        CurrentUser.RegisterLogin(CurrentUser);
         clsMainScreen::ShowMainMenuScreen();
         return true;
     }
