@@ -96,6 +96,15 @@ private:
         _AddUserDataToFile(_ConvertUserObjestToLine(*this));
     }
 
+    string _LoginRecordLine(string Seperator = "#//#") {
+        string LoginData = "";
+        LoginData += clsDate::GetsystemDateTimeString() + Seperator;
+        LoginData += _Username + Seperator;
+        LoginData += _Password + Seperator;
+        LoginData += to_string(_Permission);
+        return LoginData;
+    }
+
 public:
 
     enum enPermissions {eFullAccess = -1, eShowClientsList = 1, eAddNewClient = 2, eDeleteClient = 4, eUpdateClient = 8, eFindClient = 16, eTransactions = 32, eManageUsers = 64};
@@ -213,6 +222,14 @@ public:
             return true;
         }
         return false;
+    }
+
+    void RegisterLogin(clsUser ActiveUser) {
+        fstream LoginFile("LoginRegister.txt", ios::in | ios::app);
+        if (LoginFile.is_open()) {
+            LoginFile << _LoginRecordLine() << endl;
+        }
+        LoginFile.close();
     }
 
     enum enSaveResults {svFaildEmptyObject = 0, svSucceeded = 1, svFaildUserExists = 2, svFailed = 3};
