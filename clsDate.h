@@ -876,4 +876,15 @@ public:
         return Date;
     }
 
+    static string GetSystemTime() {
+        time_t t = time(0);
+        tm* now = localtime(&t);
+        string CurrentTime = to_string(now->tm_hour) + ":" + to_string(now->tm_min) + ":" + to_string(now->tm_sec);
+        return CurrentTime;
+    }
+
+    static string GetsystemDateTimeString() {
+        string DateTime = DateToString(getSystemTime()) + " - " + GetSystemTime();
+        return DateTime;
+    }
 };
