@@ -27,7 +27,7 @@ private:
 
 public:
 
-    static void ShowDepositScreen() {
+    static void ShowWithdrawScreen() {
         clsScreen::_PrineScreenHeader("Deposit screen.");
         string AccountNumber = "";
 
@@ -63,7 +63,8 @@ public:
         char ConfirmTransaction = clsInputValidate::ReadChar("\nAre you sure you want to perform this transaction? [Y/N]. ");
 
         if (toupper(ConfirmTransaction) == 'Y') {
-            SaveResults = Client.Withdraw(WithdrawAmount);
+            Client.Withdraw(WithdrawAmount);
+            SaveResults = clsBankClient::enSaveResults::svSucceeded;
         }
 
         switch (SaveResults) {
