@@ -53,7 +53,14 @@ public:
         clsBankClient Sender = clsBankClient::Find(SenderAccountNumber);
         _PrintClientCard(Sender, "Sender");
         
-        string ReceiverAccountNumber = _ReadAccountNumber("receiver");
+        string ReceiverAccountNumber = "";
+        do {
+            if (!ReceiverAccountNumber.empty()) {
+                cout << "\nError, the sender and teh receiver are the same account.\n";
+            }
+            ReceiverAccountNumber = _ReadAccountNumber("receiver");
+        } while (ReceiverAccountNumber == SenderAccountNumber);
+
         if(ReceiverAccountNumber == "back") {
             cout << "\nTransaction has been cancelled.\n";
             return;
