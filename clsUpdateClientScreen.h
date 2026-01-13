@@ -69,13 +69,17 @@ public:
             cout << "\nUpdate the account details:\n";
             cout << "-------------------------------" << endl;
             _ReadClientData(Client);
+            _PrintClientCard(Client);
+        }
+
+        ConfirmModification = clsInputValidate::ReadChar("\nFinal confirmation, are you sure you woulke to modify this client? [Y:N]. ");
+        if (toupper(ConfirmModification) == 'Y') {
             SaveResaults = Client.Save();
         }
 
         switch (SaveResaults) {
         case clsBankClient::enSaveResults::svSucceeded:
             cout << "\nAccount data has been successfully updated.\n";
-            _PrintClientCard(Client);
             break;
         case clsBankClient::enSaveResults::svFailedEmptyObject:
             cout << "\nError account hasn't been saved because it's Empty";
