@@ -53,11 +53,15 @@ public:
                 cout << "\nThe transaction has been cancelled.\n";
                 return;    
             }
+            else {
+                break;
+            }
         }
         char ConfirmTransaction = clsInputValidate::ReadChar("\nAre you sure you want to perform this transaction? [Y/N]. ");
 
         if (toupper(ConfirmTransaction) == 'Y') {
-            SaveResults = Client.Deposit(DepositAmount);
+            Client.Deposit(DepositAmount);
+            SaveResults = clsBankClient::enSaveResults::svSucceeded;
         }
 
         switch (SaveResults) {
