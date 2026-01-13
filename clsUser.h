@@ -12,8 +12,12 @@ using namespace std;
 
 class clsUser : public clsPerson {
 
-private:
+public:
 
+    struct stLoginRegister;
+
+private:
+    
     enum enMode {eEmptyMode = 1, eUpdateMode = 2, eAddMode = 3};
     enMode _Mode = enMode::eUpdateMode;
 
@@ -105,9 +109,26 @@ private:
         return LoginData;
     }
 
-public:
-
-    enum enPermissions {eFullAccess = -1, eShowClientsList = 1, eAddNewClient = 2, eDeleteClient = 4, eUpdateClient = 8, eFindClient = 16, eTransactions = 32, eManageUsers = 64};
+    static stLoginRegister _ConvertLoginRecordToObject(string DataLine, string Seperator = "#//#") {
+        vector<string> LoginData = clsString::Split(DataLine, Seperator);
+        stLoginRegister sLoginData;
+        sLoginData.sSystemDateTime = LoginData[0];
+        sLoginData.sUsername = LoginData[1];
+        sLoginData.sPassword = LoginData[2];
+        sLoginData.sPermission = stoi(LoginData[3]);
+        return sLoginData;
+    }
+    
+    public:
+    
+    struct stLoginRegister {
+        string sSystemDateTime = "";
+        string sUsername = "";
+        string sPassword = "";
+        short sPermission = 0;
+    };
+    
+    enum enPermissions {eFullAccess = -1, eShowClientsList = 1, eAddNewClient = 2, eDeleteClient = 4, eUpdateClient = 8, eFindClient = 16, eTransactions = 32, eManageUsers = 64, eLoginRegister = 128};
 
     clsUser(string FirstName, string LastName, string Email, string Phone, string Username, string Password, int Permission, enMode Mode = enMode::eUpdateMode) : clsPerson (FirstName, LastName, Email, Phone) {
         _Username = Username;
@@ -212,6 +233,20 @@ public:
     static clsUser GetAddNewUserObject(string UserName)
     {
         return clsUser("", "", "", "", UserName, "", 0, enMode::eAddMode);
+    }
+
+    static vector<stLoginRegister> GetLoginRegisterData() {
+        vector<stLoginRegister> vLoginsRegisterData;
+        fstream LoginRegisterDataFile("LoginRegister.txt", ios::in);
+        if(LoginRegisterDataFile.is_open()) {
+            string LoginDataLine = "";
+            while (getline(LoginRegisterDataFile, LoginDataLine)) {
+                stLoginRegister SingleLoginData = _ConvertLoginRecordToObject(LoginDataLine);
+                vLoginsRegisterData.push_back(SingleLoginData);
+            }
+        }
+        LoginRegisterDataFile.close();
+        return vLoginsRegisterData;
     }
 
     bool CheckAccessPermission(enPermissions Permission) {

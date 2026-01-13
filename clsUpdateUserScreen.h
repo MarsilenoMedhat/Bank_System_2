@@ -66,10 +66,16 @@ private:
         if (toupper(Answer) == 'Y') {
             permission += clsUser::enPermissions::eManageUsers;
         }
+
+        Answer = clsInputValidate::ReadChar("\nLogin register? [Y/N]:  ");
+        if (toupper(Answer) == 'Y') {
+            permission += clsUser::enPermissions::eLoginRegister;
+        }
         return permission;
     }
     static void _PrintUserData(clsUser User) {
-        cout << "User card:";
+        cout << "\n________________________________________";
+        cout << "\nUser card:";
         cout << "\n________________________________________";
         cout << "\nFirst name    : " << User.GetFirstName();
         cout << "\nLast name     : " << User.GetLastName();
@@ -105,25 +111,17 @@ public:
         }
         clsUser User = clsUser::Find(Username);
         _PrintUserData(User);
-        clsUser::enSaveResults SaveResults;
+        clsUser::enSaveResults SaveResults = clsUser::enSaveResults::svFaildEmptyObject;
 
         char ConfirmOperation = clsInputValidate::ReadChar("\nDo you want to update this user? [Y/N]:  ");
         if (toupper(ConfirmOperation) == 'Y') {
             _ReadUserData(User);
-        }
-        else {
-            cout << "\nThe user hasn't been updated.\n";
-            return;
+            _PrintUserData(User);
         }
 
-        _PrintUserData(User);
         ConfirmOperation = clsInputValidate::ReadChar("\nFinal confirmation, do you want to update this user? [Y/N]:  ");
         if (toupper(ConfirmOperation) == 'Y') {
             SaveResults = User.Save();
-        }
-        else {
-            cout << "\nThe user hasn't been updated.\n";
-            return;
         }
 
         switch(SaveResults) {
