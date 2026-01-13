@@ -227,13 +227,28 @@ public:
         }
     }
 
-    enSaveResults Deposit(float DepositAmount) {
+    void Deposit(float DepositAmount) {
         _AccountBalance += DepositAmount;
-        return Save();
+        Save();
     }
 
-    enSaveResults Withdraw(float WithdrawAmount) {
-        _AccountBalance -= WithdrawAmount;
-        return Save();
+    bool Withdraw(float WithdrawAmount) {
+        if (WithdrawAmount > _AccountBalance) {
+            return false;
+        }
+        else {
+            _AccountBalance -= WithdrawAmount;
+        }
+        Save();
+        return true;
+    }
+
+    bool Transfer(clsBankClient& Receiver, double TransferAmount) {
+        if (TransferAmount > _AccountBalance) {
+            return false;
+        }
+        Withdraw(TransferAmount);
+        Receiver.Deposit(TransferAmount);
+        return true;
     }
 };
