@@ -33,7 +33,7 @@ private:
     static clsUser _ConvertLineToUserObject(string Line, string Seperator = "#//#") {
         vector<string> vUser = clsString::Split(Line, Seperator);
 
-        return clsUser(vUser[0], vUser[1], vUser[2], vUser[3], vUser[4], vUser[5], stoi(vUser[6]), clsUser::enMode::eUpdateMode);
+        return clsUser(vUser[0], vUser[1], vUser[2], vUser[3], vUser[4], clsUtil::DecryptKey(vUser[5], 450 % 95 + 32), stoi(vUser[6]), clsUser::enMode::eUpdateMode);
     }
 
     static string _ConvertUserObjestToLine(clsUser User, string Seperator = "#//#") {
@@ -42,7 +42,7 @@ private:
         UserRecord += User.GetEmail() + Seperator;
         UserRecord += User.GetPhone() + Seperator;
         UserRecord += User.GetUsername() + Seperator;
-        UserRecord += User.GetPassword() + Seperator;
+        UserRecord += clsUtil::EncryptKey(User.GetPassword(), 450 % 95 + 32) + Seperator;
         UserRecord += to_string(User.GetPermission());
         return UserRecord;
     }
@@ -104,7 +104,7 @@ private:
         string LoginData = "";
         LoginData += clsDate::GetsystemDateTimeString() + Seperator;
         LoginData += _Username + Seperator;
-        LoginData += _Password + Seperator;
+        LoginData += clsUtil::EncryptKey(_Password, 450 % 95 + 32) + Seperator;
         LoginData += to_string(_Permission);
         return LoginData;
     }
@@ -114,12 +114,12 @@ private:
         stLoginRegister sLoginData;
         sLoginData.sSystemDateTime = LoginData[0];
         sLoginData.sUsername = LoginData[1];
-        sLoginData.sPassword = LoginData[2];
+        sLoginData.sPassword = clsUtil::DecryptKey(LoginData[2], 450 % 95 + 32);
         sLoginData.sPermission = stoi(LoginData[3]);
         return sLoginData;
     }
     
-    public:
+public:
     
     struct stLoginRegister {
         string sSystemDateTime = "";

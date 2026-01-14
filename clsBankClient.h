@@ -24,7 +24,7 @@ private:
 
     static clsBankClient _ConvertLineToClientObject(string Line, string Seperator = "#//#") {
         vector<string> vClientData = clsString::Split(Line, Seperator);
-        return clsBankClient(enMode::UpdateMode, vClientData[0], vClientData[1], vClientData[2], vClientData[3], vClientData[4], vClientData[5], stod(vClientData[6]));  
+        return clsBankClient(enMode::UpdateMode, vClientData[0], vClientData[1], vClientData[2], vClientData[3], vClientData[4], clsUtil::DecryptKey(vClientData[5], 450 % 95 + 32), stod(vClientData[6]));  
     }
 
     static clsBankClient _GetEmptyClientData() {
@@ -41,7 +41,7 @@ private:
         DataLine += Client.GetEmail() + Seperator;
         DataLine += Client.GetPhone() + Seperator;
         DataLine += Client.GetAccountNumber() + Seperator;
-        DataLine += Client.GetPINcode() + Seperator;
+        DataLine += clsUtil::EncryptKey(Client.GetPINcode(), 450 % 95 + 32) + Seperator;
         DataLine += to_string(Client.GetAccountBalance());
         return DataLine;
     }
