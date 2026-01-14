@@ -8,15 +8,16 @@
 #include "clsWithdrawScreen.h"
 #include "clsTotalBalanceScreen.h"
 #include "clsTransferScreen.h"
+#include "clsTransferLogScreen.h"
 using namespace std;
 
 class clsTransactionsScreen : protected clsScreen {
 
 private:
-    enum enTransactionsMenuOptions {eDeposit = 1, eWithdraw = 2, eTotalBalance = 3, eTransfer = 4, eMainMenu = 5};
+    enum enTransactionsMenuOptions {eDeposit = 1, eWithdraw = 2, eTotalBalance = 3, eTransfer = 4, eTransferLog = 5 , eMainMenu = 6};
 
     static short _ReadTransactionsMenuOption() {
-        short Choice = clsInputValidate::ReadNumberInRange(1, 5, "Choose what do you want to do? [1:5]. ", "Invalid input, Choose what do you want to do? [1:4]. ");
+        short Choice = clsInputValidate::ReadNumberInRange(1, 6, "Choose what do you want to do? [1:6]. ", "Invalid input, Choose what do you want to do? [1:6]. ");
         return Choice;
     }
 
@@ -46,6 +47,11 @@ private:
         clsTransferScreen::ShowTransferScreen();
     }
 
+    static void _ShowTransferLogScreen() {
+        // cout << "\nTransfer log screen will be here soon...\n";
+        clsTransferLogScreen::ShowTransferLogScreen();
+    }
+
     static void _PerforTransactionsMenuOption(clsTransactionsScreen::enTransactionsMenuOptions TransactionMenuChoice) {
         switch (TransactionMenuChoice) {
             case clsTransactionsScreen::enTransactionsMenuOptions::eDeposit:
@@ -66,6 +72,11 @@ private:
             case clsTransactionsScreen::enTransactionsMenuOptions::eTransfer:
                 system("cls");
                 _ShowTransferScreen();
+                _BackToTransactionsMenuScreen();
+                break;
+            case clsTransactionsScreen::enTransactionsMenuOptions::eTransferLog:
+                system("cls");
+                _ShowTransferLogScreen();
                 _BackToTransactionsMenuScreen();
                 break;
             case clsTransactionsScreen::enTransactionsMenuOptions::eMainMenu:
@@ -89,7 +100,8 @@ public:
         cout << " [2] Withdraw.\n";
         cout << " [3] Total balance.\n";
         cout << " [4] Transfer.\n";
-        cout << " [5] Main menu.\n";
+        cout << " [5] Transfer log.\n";
+        cout << " [6] Main menu.\n";
         cout << "========================================\n";
         _PerforTransactionsMenuOption((clsTransactionsScreen::enTransactionsMenuOptions)_ReadTransactionsMenuOption());
     }
