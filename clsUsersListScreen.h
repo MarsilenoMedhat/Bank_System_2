@@ -19,6 +19,21 @@ private:
         cout << "| " << left << setw(10) << User.GetPermission() << " |";
     }
 
+    static void _PrintTableHeader() {
+        cout << "\n____________________________________________________________________________________________________________________________\n\n";
+        cout << "| " << left << setw(25) << "Username";
+        cout << "| " << left << setw(20) << "Full name";
+        cout << "| " << left << setw(20) << "Phone";
+        cout << "| " << left << setw(25) << "Email";
+        cout << "| " << left << setw(10) << "Password";
+        cout << "| " << left << setw(10) << "Permission" << " |";
+        cout << "\n____________________________________________________________________________________________________________________________\n\n";        
+    }
+
+    static void _PrintTableFooter() {
+        cout << "____________________________________________________________________________________________________________________________\n\n";
+    }
+
 public:
 
     static void ShowUsersListScreen() {
@@ -28,14 +43,7 @@ public:
         string SupTitle = "(" + to_string(vUsersData.size()) + ") Users";
         
         clsScreen::_PrineScreenHeader(Title, SupTitle);
-        cout << "\n____________________________________________________________________________________________________________________________\n" << endl;
-        cout << "| " << left << setw(25) << "Username";
-        cout << "| " << left << setw(20) << "Full name";
-        cout << "| " << left << setw(20) << "Phone";
-        cout << "| " << left << setw(25) << "Email";
-        cout << "| " << left << setw(10) << "Password";
-        cout << "| " << left << setw(10) << "Permission" << " |";
-        cout << "\n____________________________________________________________________________________________________________________________\n" << endl;
+        _PrintTableHeader();
         
         if (vUsersData.size() == 0) {
             cout << "No users avaialble in the system!";
@@ -46,7 +54,6 @@ public:
                 cout << endl;
             }
         }
-        cout << "____________________________________________________________________________________________________________________________\n" << endl;
+        _PrintTableFooter();
     }
-
 };

@@ -19,6 +19,21 @@ private:
         cout << "| " << setw(20) << left << Client.GetAccountBalance() << " |";
     }
 
+    static void _PrintTableHeader() {
+        cout << "\n___________________________________________________________________________________________________________________________________\n\n";
+        cout << "| " << left << setw(15) << "Account number";
+        cout << "| " << left << setw(20) << "client name";
+        cout << "| " << left << setw(17) << "Phone number";
+        cout << "| " << left << setw(35) << "Email address";
+        cout << "| " << left << setw(10) << "PIN code";
+        cout << "| " << left << setw(20) << "Account balance" << " |";
+        cout << "\n___________________________________________________________________________________________________________________________________\n\n";
+    }
+
+    static void _PrintTableFooter() {
+        cout << "___________________________________________________________________________________________________________________________________\n\n";
+    }
+
 public:
     static void ShowClientsList() {
 
@@ -31,14 +46,7 @@ public:
         string SubTitle = "Clients list (" + to_string(vClients.size()) + ") client(s).";
 
         clsScreen::_PrineScreenHeader(Title, SubTitle);
-        cout << "\n___________________________________________________________________________________________________________________________________\n" << endl;
-        cout << "| " << left << setw(15) << "Account number";
-        cout << "| " << left << setw(20) << "client name";
-        cout << "| " << left << setw(17) << "Phone number";
-        cout << "| " << left << setw(35) << "Email address";
-        cout << "| " << left << setw(10) << "PIN code";
-        cout << "| " << left << setw(20) << "Account balance" << " |";
-        cout << "\n___________________________________________________________________________________________________________________________________\n" << endl;
+        _PrintTableHeader();
 
         if (vClients.size() == 0) {
             cout << "\t\t\t\tNo Clients Available In the System!";
@@ -49,6 +57,6 @@ public:
                 cout << endl;
             }
         }
-        cout << "\n___________________________________________________________________________________________________________________________________\n" << endl;
+        _PrintTableFooter();
     }
 };

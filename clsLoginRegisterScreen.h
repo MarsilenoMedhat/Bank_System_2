@@ -19,6 +19,19 @@ private:
         cout << "| " << setw(10) << left << LoginRecord.sPermission << " |";
     }
 
+    static void _PrintTableHeader() {
+        cout << "\n________________________________________________________________________________\n\n";
+        cout << "| " << left << setw(30) << "Date\\Time";
+        cout << "| " << left << setw(20) << "Account number";
+        cout << "| " << left << setw(10) << "Password";
+        cout << "| " << left << setw(10) << "Permission" << " |";
+        cout << "\n________________________________________________________________________________\n\n";
+    }
+
+    static void _PrintTableFooter() {
+        cout << "________________________________________________________________________________\n\n";
+    }
+
     public:
 
     static void ShowLoginRegisterListScreen() {
@@ -32,12 +45,7 @@ private:
         string SubTitle = "()" + to_string(vLoginRegisterData.size()) + ") Record(s).";
 
         clsScreen::_PrineScreenHeader(Title, SubTitle);
-        cout << "\n________________________________________________________________________________\n" << endl;
-        cout << "| " << left << setw(30) << "Date\\Time";
-        cout << "| " << left << setw(20) << "Account number";
-        cout << "| " << left << setw(10) << "Password";
-        cout << "| " << left << setw(10) << "Permission" << " |";
-        cout << "\n________________________________________________________________________________\n" << endl;
+        _PrintTableHeader();
 
         if (vLoginRegisterData.size() == 0) {
             cout << "\t\t\t\tNo login records registered In the System!";
@@ -48,6 +56,6 @@ private:
                 cout << endl;
             }
         }
-        cout << "________________________________________________________________________________\n" << endl;
+        _PrintTableFooter();
     }
 };
