@@ -94,6 +94,28 @@ private:
         ClientsDataFile.close();
     }
 
+    string _ConvertTransferDataToLino(clsBankClient Receiver, double TransferAmount, string Username , string Seperator = "#//#") {
+        string TransferDataLine = "";
+        TransferDataLine += clsDate::GetsystemDateTimeString() + Seperator;
+        TransferDataLine += _AccountNumber + Seperator;
+        TransferDataLine += Receiver.GetAccountNumber() + Seperator;
+        TransferDataLine += to_string(TransferAmount) + Seperator;
+        TransferDataLine += to_string(_AccountBalance) + Seperator;
+        TransferDataLine += to_string(Receiver.GetAccountBalance()) + Seperator;
+        TransferDataLine += Username;
+        return TransferDataLine;
+    }
+    
+    void _RegisterTransferLogData(clsBankClient Receiver, double TransferAmount, string Username) {
+        string TransferDataLine = "";
+        fstream TransferDataFile("TransferLog.txt", ios::out | ios::app);
+    
+        if (TransferDataFile.is_open()) {
+            TransferDataLine = _ConvertTransferDataToLino(Receiver, TransferAmount, Username);
+            TransferDataFile << TransferDataLine << endl;
+        }
+        TransferDataFile.close();
+    }
 public:
     clsBankClient(enMode Mode, string FirstName, string LastName, string Email, string Phone, string AccountNumber, string PINcode, double AccountBalance) : clsPerson(FirstName, LastName, Email, Phone) {
         _Mode = Mode;
@@ -243,12 +265,14 @@ public:
         return true;
     }
 
-    bool Transfer(clsBankClient& Receiver, double TransferAmount) {
+    bool Transfer(clsBankClient& Receiver, double TransferAmount, string Username) {
         if (TransferAmount > _AccountBalance) {
             return false;
         }
         Withdraw(TransferAmount);
         Receiver.Deposit(TransferAmount);
+        _RegisterTransferLogData(Receiver, TransferAmount, Username);
         return true;
     }
+
 };
