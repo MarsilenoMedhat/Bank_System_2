@@ -7,6 +7,7 @@
 #include "clsBankClient.h"
 #include "clsInputValidate.h"
 #include "clsUtil.h"
+#include "Global.h"
 using namespace std;
 
 class clsTransferScreen : protected clsScreen {
@@ -54,12 +55,13 @@ public:
         _PrintClientCard(Sender, "Sender");
         
         string ReceiverAccountNumber = "";
-        do {
-            if (!ReceiverAccountNumber.empty()) {
-                cout << "\nError, the sender and teh receiver are the same account.\n";
+        while (true) {
+			ReceiverAccountNumber = _ReadAccountNumber("receiver");
+            if (!(ReceiverAccountNumber == SenderAccountNumber)) {
+				break;
             }
-            ReceiverAccountNumber = _ReadAccountNumber("receiver");
-        } while (ReceiverAccountNumber == SenderAccountNumber);
+            cout << "\nError, the sender and teh receiver are the same account.\n";
+        }
 
         if(ReceiverAccountNumber == "back") {
             cout << "\nTransaction has been cancelled.\n";
@@ -85,10 +87,10 @@ public:
         char ConfirmTransaction = clsInputValidate::ReadChar("\nDo you want to process this transaction? [Y/N]:  ");
         
         if (toupper(ConfirmTransaction) == 'Y') {
-            if (Sender.Transfer(Receiver, TransferAmount)) {
+            if (Sender.Transfer(Receiver, TransferAmount, CurrentUser.GetUsername())) {
+                cout << "\nTransaction has been done successfully.\n";
                 _PrintClientCard(Sender, "Sender");
                 _PrintClientCard(Receiver, "Receiver");
-                cout << "\nTransaction has been done successfully.\n";
             }
         }
         else {
