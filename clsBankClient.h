@@ -10,6 +10,9 @@
 using namespace std;
 
 class clsBankClient : public clsPerson {
+public:
+    struct stTransferLog;
+
 private:
     enum enMode {EmptyMode = 0, UpdateMode = 1, AddMode = 2};
     enMode _Mode;
@@ -116,7 +119,32 @@ private:
         }
         TransferDataFile.close();
     }
+
+    static stTransferLog _ConvertTransferLogLineToObject(string Line, string Seperator = "#//#") {
+        vector<string> vTransferLog = clsString::Split(Line, Seperator);
+        stTransferLog TransferData;
+        TransferData.DateTime = vTransferLog[0];
+        TransferData.SenderAccountNumber = vTransferLog[1];
+        TransferData.ReceiverAccountNumber = vTransferLog[2];
+        TransferData.TransferAmount = stoi(vTransferLog[3]);
+        TransferData.SenderNewBalance = stoi(vTransferLog[4]);
+        TransferData.ReceiverNewBalance = stoi(vTransferLog[5]);
+        TransferData.Username = vTransferLog[6];
+        return TransferData;
+    }
+
 public:
+
+    struct stTransferLog {
+        string DateTime = "";
+        string SenderAccountNumber = "";
+        string ReceiverAccountNumber = "";
+        double TransferAmount = 0;
+        double SenderNewBalance = 0;
+        double ReceiverNewBalance = 0;
+        string Username = "";
+    };
+
     clsBankClient(enMode Mode, string FirstName, string LastName, string Email, string Phone, string AccountNumber, string PINcode, double AccountBalance) : clsPerson(FirstName, LastName, Email, Phone) {
         _Mode = Mode;
         _AccountNumber = AccountNumber;
@@ -275,4 +303,18 @@ public:
         return true;
     }
 
+    static vector<stTransferLog> GetTransferLogData() {
+        vector<stTransferLog> vTransferLog;
+        fstream TransferLogDataFile ("TransferLog.txt", ios::in);
+        if (TransferLogDataFile.is_open()) {
+            string DataLine = "";
+            stTransferLog TransferData;
+            while (getline(TransferLogDataFile, DataLine)) {
+                TransferData = _ConvertTransferLogLineToObject(DataLine);
+                vTransferLog.push_back(TransferData);
+            }
+            TransferLogDataFile.close();
+        }
+        return vTransferLog;
+    }
 };
