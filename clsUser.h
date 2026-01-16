@@ -128,7 +128,7 @@ public:
         short sPermission = 0;
     };
     
-    enum enPermissions {eFullAccess = -1, eShowClientsList = 1, eAddNewClient = 2, eDeleteClient = 4, eUpdateClient = 8, eFindClient = 16, eTransactions = 32, eManageUsers = 64, eLoginRegister = 128};
+    enum enPermissions {eFullAccess = -1, eShowClientsList = 1, eAddNewClient = 2, eDeleteClient = 4, eUpdateClient = 8, eFindClient = 16, eTransactions = 32, eManageUsers = 64, eLoginRegister = 128, eCurrencyExchange = 256};
 
     clsUser(string FirstName, string LastName, string Email, string Phone, string Username, string Password, int Permission, enMode Mode = enMode::eUpdateMode) : clsPerson (FirstName, LastName, Email, Phone) {
         _Username = Username;

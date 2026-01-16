@@ -12,16 +12,17 @@
 #include "clsTransactionsScreen.h"
 #include "clsManageUsersScreen.h"
 #include "clsLoginRegisterScreen.h"
+#include "clsCurrencyExchangeScreen.h"
 #include "Global.h"
 using namespace std;
 
 class clsMainScreen : protected clsScreen {
 
 private:
-    enum enMainMenuOptions {eClientList = 1, eAddClient = 2, eDeleteClient = 3, eUpdatedClient = 4, eFindClient = 5, eTransactions = 6, eManageUsers = 7,eLoginRegister = 8, eLogout = 9};
+    enum enMainMenuOptions {eClientList = 1, eAddClient = 2, eDeleteClient = 3, eUpdatedClient = 4, eFindClient = 5, eTransactions = 6, eManageUsers = 7,eLoginRegister = 8, eCurrencyExchange = 9, eLogout = 10};
 
     static short _ReadMainMenuOption() {
-        short Choice = clsInputValidate::ReadNumberInRange(1, 9, "Choose what do you want to do? [1:9]. ", "Invalid input, Choose what do you want to do? [1:9]. ");
+        short Choice = clsInputValidate::ReadNumberInRange(1, 10, "Choose what do you want to do? [1:10]. ", "Invalid input, Choose what do you want to do? [1:10]. ");
         return Choice;
     }
 
@@ -69,6 +70,10 @@ private:
     static void _ShowLoginRegisterScreen() {
         // cout << "\nLogin register screen will be here soon...\n";
         clsLoginRegisterScreen::ShowLoginRegisterListScreen();
+    }
+    static void _ShowCurrencyExchangeScreen() {
+        // cout << "\nCurrency exchange screen will be here soon...\n";
+        clsCurrencyExchangeScreen::ShowCurrencyExchangeScreen();
     }
 
     static void _Logout() {
@@ -118,6 +123,11 @@ private:
                 _ShowLoginRegisterScreen();
                 _BackToMainMenuScreen();
                 break;
+            case clsMainScreen::enMainMenuOptions::eCurrencyExchange:
+                system("cls");
+                _ShowCurrencyExchangeScreen();
+                _BackToMainMenuScreen();
+                break;
             case clsMainScreen::enMainMenuOptions::eLogout:
                 system("cls");
                 _Logout();
@@ -141,7 +151,8 @@ public:
         cout << " [6] Transactions.\n";
         cout << " [7] Manage users.\n";
         cout << " [8] Login register.\n";
-        cout << " [9] Logout.\n";
+        cout << " [9] Currency exchange.\n";
+        cout << " [10] Logout.\n";
         cout << "========================================\n";
         _PerforMainMenuOption((clsMainScreen::enMainMenuOptions)_ReadMainMenuOption());
     }
