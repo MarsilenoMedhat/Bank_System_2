@@ -39,3 +39,28 @@ The project is built using a **Modular Architecture**:
 - `Screens/`: UI classes for menus (e.g., `clsCurrencyExchangeScreen`).
 - `Lib/`: Helper libraries (`clsString`, `clsDate`, `clsUtil`).
 - `Data/`: Text files storing the database (e.g., `Currency.txt`, `Clients.txt`).
+
+## New Project Structure
+
+The project has been reorganized into a modular hierarchy for better scalability and maintainability:
+
+```text
+Bank_System_2/
+├── Core/                 # Business Logic & Data Models
+│   ├── clsBankClient.h
+│   ├── clsCurrency.h
+│   └── clsUser.h
+├── Lib/                  # Reusable Utility Libraries
+│   ├── clsDate.h
+│   ├── clsInputValidate.h
+│   ├── clsString.h
+│   └── clsScreen.h
+├── Screens/              # User Interface Layers
+│   ├── clsMainScreen.h
+│   ├── Client/           # Client Management Screens
+│   ├── Currencies/       # Currency Exchange Screens
+│   └── User/             # User & Login Management Screens
+├── Global.h              # System-wide global variables
+└── Main.cpp              # Application Entry Point
+
+Developed by Marsileno Medhat
