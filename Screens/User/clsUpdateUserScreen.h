@@ -31,7 +31,7 @@ private:
         }
 
         int permission = 0;
-        cout << "\nDo you want to sgive access to:\n";
+        cout << "\nDo you want to give access to:\n";
         Answer = clsInputValidate::ReadChar("\nShow client list? [Y/N]:  ");
         if (toupper(Answer) == 'Y') {
             permission += clsUser::enPermissions::eShowClientsList;
@@ -70,6 +70,11 @@ private:
         Answer = clsInputValidate::ReadChar("\nLogin register? [Y/N]:  ");
         if (toupper(Answer) == 'Y') {
             permission += clsUser::enPermissions::eLoginRegister;
+        }
+
+        Answer = clsInputValidate::ReadChar("\nCurrency exchange? [Y/N]:  ");
+        if (toupper(Answer) == 'Y') {
+            permission += clsUser::enPermissions::eCurrencyExchange;
         }
         return permission;
     }
@@ -115,7 +120,15 @@ public:
 
         char ConfirmOperation = clsInputValidate::ReadChar("\nDo you want to update this user? [Y/N]:  ");
         if (toupper(ConfirmOperation) == 'Y') {
-            _ReadUserData(User);
+
+            int UpdateType = clsInputValidate::ReadNumberInRange<int>(1, 2, "\nDo you want to update [1]All data, [2]Permissions: ", "\nInvalid input, Do you want to update [1]All data, [2]Permissions: ");
+
+            if (UpdateType == 1) {
+                _ReadUserData(User);
+            }
+            else {
+                User.SetPermission(_ReadPermissions());
+            }
             _PrintUserData(User);
         }
 

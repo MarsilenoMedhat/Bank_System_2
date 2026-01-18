@@ -84,6 +84,7 @@ public:
         if (!clsScreen::_CheckAccessRight(clsUser::enPermissions::eCurrencyExchange)) {
             return;
         }
+        
         clsScreen::_PrineScreenHeader("Currency exchage screen");
         cout << "\n========================================\n";
         cout << "\n\tCurrency exchage Menu\n";
